@@ -1,6 +1,9 @@
 package com.example.vin_04.comactividades;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.provider.Contacts;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,8 +18,19 @@ public class MainActivity extends AppCompatActivity {
         Intent ibm = new Intent(this,Actividad2.class);
         ibm.putExtra("Mandamensaje","Hola");
         startActivity(ibm);
+        Accesa();
     }
 
+    public void Accesa(){
+        ContentResolver Agenda = getContentResolver();
+        Cursor micur = Agenda.query(Contacts.People.CONTENT_URI,null,null,null,null);
+        if(micur.getCount()>0){
+            while(micur.moveToNext()){
+                String id = micur.getString(micur.getColumnIndex(Contacts.People._ID));
+                String name = micur.getString(micur.getColumnIndex(Contacts.People.NAME));
+            }
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
